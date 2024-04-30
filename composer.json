@@ -1,7 +1,7 @@
 {
-  "name": "goudenvis/openvpn3-client",
+  "name": "goudenvis/openvpn3client",
   "description": "Install and connect to one or multiple VPN-tunnels",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "license": "MIT",
   "authors": [
     {
@@ -10,8 +10,8 @@
     }
   ],
   "require": {
-    "php": "^8.3",
-    "laravel/laravel": "^10.8"
+    "php": "^8.2",
+    "laravel/framework": "^10.8"
   },
   "require-dev": {},
   "prefer-stable": true,
@@ -22,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Goudenvis\\openVPN3-client\\": "src"
+      "Goudenvis\\OpenVPN3Client\\": "src"
     }
   }
 }

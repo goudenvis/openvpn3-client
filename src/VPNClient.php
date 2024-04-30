@@ -1,19 +1,47 @@
 <?php
 
+namespace Goudenvis\OpenVPN3Client;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 class VPNClient
 {
-    protected function open($name = null) : bool
+    public static function open($name = null) : bool
     {
         if ($name === null) {
-            $name = self::getName();
+            $name = self::getFileName();
         }
+        return self::sessionStart($name);
     }
 
-    private function getName($item = 1)
+    private static function getFileName($item = null)
     {
         $location = env('VPN_CLIENT_FOLDER');
         $files = Storage::files("{$location}/");
+        foreach ($files as $file) {
+            $newFiles[] = Str::beforeLast(Str::afterLast($file, "/"), ".ovpn");
+        }
 
+        if ($item != null) {
+            return [$newFiles[$item-1]];
+        }
+
+        return $newFiles;
+        dd($newFiles);
 
     }
+
+    private static function sessionStart($name, $publicAccess = true) : bool
+    {
+        exec('openvpn3 session-start --config ' . $name);
+
+        if ($publicAccess) {
+            sleep(1);
+            exec('openvpn3 session-acl --config ' . $name . ' --public-access true');
+        }
+        sleep (1);
+
+        return true;
+    }
+
 }
