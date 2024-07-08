@@ -2,8 +2,8 @@
 
 namespace Goudenvis\OpenVPN3Client;
 
-use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 
 class VPNClient
@@ -75,7 +75,7 @@ class VPNClient
                 return false;
             }
 
-            \Process::run("openvpn3 config-import --config {$file} --name {$name} --persistent");
+            $result = Process::run("openvpn3 config-import --config {$file} --name {$name} --persistent");
 
             return true;
         }
