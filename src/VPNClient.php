@@ -56,10 +56,6 @@ class VPNClient
 
     public static function addConfig($configName = null) : bool
     {
-        // add config
-
-        // if no specific config was given, add all from folder
-
         $location = env('VPN_CLIENT_FOLDER');
 
         $files = Storage::files("{$location}/");
@@ -74,11 +70,10 @@ class VPNClient
             if ($configName !== null && $configName !== $name) {
                 return false;
             }
-            dump($name);
-            dump($file);
-            dump(Storage::path($file));
+
             $path = Storage::path($file);
-            $result = Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
+
+            Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
 
             return true;
         }
