@@ -76,7 +76,9 @@ class VPNClient
             }
             dump($name);
             dump($file);
-            $result = Process::run("openvpn3 config-import --config {$file} --name {$name} --persistent");
+            dump(Storage::path($file));
+            $path = Storage::path($file);
+            $result = Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
 
             return true;
         }
