@@ -74,7 +74,8 @@ class VPNClient
             if ($configName !== null && $configName !== $name) {
                 return false;
             }
-
+            dump($name);
+            dump($file);
             $result = Process::run("openvpn3 config-import --config {$file} --name {$name} --persistent");
 
             return true;
