@@ -67,6 +67,7 @@ class VPNClient
         if ($configName) {
             dump('only: ' . $configName);
             if ( in_array($configName, $files)) {
+                dump('in array');
                 $path = Storage::path($configName . 'ovpn');
 
                 Process::run("openvpn3 config-import --config {$path} --name {$configName} --persistent");
