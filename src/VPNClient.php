@@ -86,7 +86,7 @@ class VPNClient
         dump('name= '.$name);
         $result = shell_exec('openvpn3 configs-list');
         dump($result);
-        if ($name !== null) {
+        if ($name !== null && self::configLoaded($name)) {
             exec("openvpn3 config-remove --config {$name} --force");
             dump('done removing: ' . $name);
             return true;
