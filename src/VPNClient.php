@@ -67,7 +67,8 @@ class VPNClient
         if ($configName) {
             dump('only: ' . $configName);
             dump($files);
-            if ( in_array($configName . '.ovpn', $files)) {
+            dump($location . '/' . $configName . '.ovpn');
+            if ( in_array($location . '/' . $configName . '.ovpn', $files)) {
                 dump('in array');
                 $path = Storage::path($configName . 'ovpn');
 
