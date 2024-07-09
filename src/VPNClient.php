@@ -85,8 +85,10 @@ class VPNClient
     {
         $result = shell_exec('openvpn3 configs-list');
 
-        if ($name !== null && self::configLoaded($name, false)) {
-            exec("openvpn3 config-remove --config {$name} --force");
+        if ($name !== null ) {
+            if (self::configLoaded($name, false)) {
+                exec("openvpn3 config-remove --config {$name} --force");
+            }
             return true;
         } else {
             preg_match("[a-zA-Z0-9]{36}",$result, $keys);
