@@ -67,21 +67,20 @@ class VPNClient
         if ($configName) {
             if ( in_array($location . '/' . $configName . '.ovpn', $files)) {
                 $path = Storage::path($location . '/' . $configName . '.ovpn');
-                dump("openvpn3 config-import --config {$path} --name {$configName} --persistent");
+
                 Process::run("openvpn3 config-import --config {$path} --name {$configName} --persistent");
             }
             return true;
         }
 
         foreach ($files as $file) {
-            dump($file);
             $name = Str::beforeLast(Str::afterLast($file, "/"), ".ovpn");
 
             if ($configName !== null && $configName !== $name) {
                 return false;
             }
 
-            $path = Storage::path($file);
+            $path = Storage::path($location . '/' . $file);
 
             Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
 
