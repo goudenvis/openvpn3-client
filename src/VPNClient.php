@@ -64,14 +64,14 @@ class VPNClient
             return false;
         }
 
-        if ($configName) {
-            if ( in_array($location . '/' . $configName . '.ovpn', $files)) {
-                $path = Storage::path($location . '/' . $configName . '.ovpn');
-
-                Process::run("openvpn3 config-import --config {$path} --name {$configName} --persistent");
-            }
-            return true;
-        }
+//        if ($configName) {
+//            if ( in_array($location . '/' . $configName . '.ovpn', $files)) {
+//                $path = Storage::path($location . '/' . $configName . '.ovpn');
+//
+//                Process::run("openvpn3 config-import --config {$path} --name {$configName} --persistent");
+//            }
+//            return true;
+//        }
 
         foreach ($files as $file) {
             $name = Str::beforeLast(Str::afterLast($file, "/"), ".ovpn");
@@ -80,7 +80,7 @@ class VPNClient
                 return false;
             }
 
-            $path = Storage::path($location . '/' . $file);
+            $path = Storage::path($location . '/' . $file . '.ovpn');
 
             Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
 
