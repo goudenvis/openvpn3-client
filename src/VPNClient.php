@@ -83,18 +83,15 @@ class VPNClient
 
     public static function removeConfig($name = null) : bool
     {
-        dump('name= '.$name);
         $result = shell_exec('openvpn3 configs-list');
-        dump($result);
-        if ($name !== null && self::configLoaded($name)) {
+
+        if ($name !== null && self::configLoaded($name, false)) {
             exec("openvpn3 config-remove --config {$name} --force");
-            dump('done removing: ' . $name);
             return true;
         } else {
             preg_match("[a-zA-Z0-9]{36}",$result, $keys);
 
             foreach ($keys as $key) {
-                dump('Remove key: ' . $key);
                 exec("openvpn3 config-remove --path /net/openvpn/v3/configuration/{$key} --force");
             }
         }
@@ -185,7 +182,7 @@ class VPNClient
             return true;
         }
 
-        $result = exec('openvpn3 session-manage --config ' . $name . ' --disconnect');
+        exec('openvpn3 session-manage --config ' . $name . ' --disconnect');
 
         sleep(1);
 
@@ -193,12 +190,16 @@ class VPNClient
     }
 
 
-    public static function configLoaded($name) : bool
+    public static function configLoaded($name, $throwException = true) : bool
     {
         $result = shell_exec('openvpn3 configs-list');
 
         if (!Str::contains($result, $name)) {
-            throw new \Exception('Config is not loaded');
+            if ($throwException) {
+                throw new \Exception('Config is not loaded');}
+            else {
+                return false;
+            }
         }
 
         return true;
