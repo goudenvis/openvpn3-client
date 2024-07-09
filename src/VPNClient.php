@@ -89,14 +89,13 @@ class VPNClient
             exec("openvpn3 config-remove --config {$name} --force");
 
             return true;
+        } else {
+            preg_match("[a-zA-Z0-9]{36}",$result, $keys);
+
+            foreach ($keys as $key) {
+                exec("openvpn3 config-remove --path /net/openvpn/v3/configuration/{$key} --force");
+            }
         }
-
-        preg_match("[a-zA-Z0-9]{36}",$result, $keys);
-
-        foreach ($keys as $key) {
-            exec("openvpn3 config-remove --path /net/openvpn/v3/configuration/{$key} --force");
-        }
-
         return true;
     }
 
