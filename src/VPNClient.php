@@ -80,7 +80,7 @@ class VPNClient
                 continue;
             }
 
-            $path = Storage::path($location . '/' . $file . '.ovpn');
+            $path = Storage::path($file);
 dump("openvpn3 config-import --config {$path} --name {$name} --persistent");
             Process::run("openvpn3 config-import --config {$path} --name {$name} --persistent");
 
