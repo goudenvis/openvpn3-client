@@ -77,7 +77,7 @@ class VPNClient
             $name = Str::beforeLast(Str::afterLast($file, "/"), ".ovpn");
 
             if ($configName !== null && $configName !== $name) {
-                return false;
+                continue;
             }
 
             $path = Storage::path($location . '/' . $file . '.ovpn');
