@@ -64,7 +64,18 @@ class VPNClient
             return false;
         }
 
+        if ($configName) {
+            dump('only: ' . $configName);
+            if ( in_array($configName, $files)) {
+                $path = Storage::path($configName . 'ovpn');
+
+                Process::run("openvpn3 config-import --config {$path} --name {$configName} --persistent");
+            }
+            return true;
+        }
+
         foreach ($files as $file) {
+            dump($file);
             $name = Str::beforeLast(Str::afterLast($file, "/"), ".ovpn");
 
             if ($configName !== null && $configName !== $name) {
