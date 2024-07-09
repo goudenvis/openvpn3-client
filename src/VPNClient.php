@@ -83,16 +83,18 @@ class VPNClient
 
     public static function removeConfig($name = null) : bool
     {
+        dump('name= '.$name);
         $result = shell_exec('openvpn3 configs-list');
-
+        dump($result);
         if ($name !== null) {
             exec("openvpn3 config-remove --config {$name} --force");
-
+            dump('done removing: ' . $name);
             return true;
         } else {
             preg_match("[a-zA-Z0-9]{36}",$result, $keys);
 
             foreach ($keys as $key) {
+                dump('Remove key: ' . $key);
                 exec("openvpn3 config-remove --path /net/openvpn/v3/configuration/{$key} --force");
             }
         }
